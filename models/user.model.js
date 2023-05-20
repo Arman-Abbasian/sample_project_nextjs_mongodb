@@ -25,8 +25,6 @@ const UserSchema = new mongoose.Schema({
 password:{
   type: String,
   required: [true,"please enter the password"],
-  minlength: [3, "password must be at least 3 character"],
-  unique:true
 },
   token:{
     type:String,

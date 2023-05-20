@@ -33,19 +33,19 @@ export default async function handler(req, res) {
       const hashPassword=bcrypt.hashSync(password,salt);
       const newUser={name,email,mobile,password:hashPassword,token}
       //3-check if the mobile is not registered before
-      // const existenceMobileCheck=await User.finde({mobile:mobile})
-      // if(existenceMobileCheck){
-      //   return res.status(400).json({
-      //     error: { message: "mobile number is registered before" },
-      //     });
-      // } 
+      const existenceMobileCheck=await User.findOne({mobile:mobile})
+      if(existenceMobileCheck){
+        return res.status(400).json({
+          error: { message: "mobile number is registered before" },
+          });
+      } 
       //4-check if the email is not registered before
-      // const existenceEmailCheck=await User.findeOne({email})
-      // if(existenceEmailCheck){
-      //   return res.status(400).json({
-      //     error: { message: "email is registered before" },
-      //     });
-      // } 
+      const existenceEmailCheck=await User.findOne({email})
+      if(existenceEmailCheck){
+        return res.status(400).json({
+          error: { message: "email is registered before" },
+          });
+      } 
         const oneUser = await User.create(newUser) /* create a new model in the database */
         res.status(201).json({ success: true, data: "user added successfully" })
       } catch (error) {
