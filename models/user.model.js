@@ -26,7 +26,6 @@ password:{
   type: String,
   required: [true,"please enter the password"],
   minlength: [3, "password must be at least 3 character"],
-  maxlength: [20, "password must be maximum 20 character"],
   unique:true
 },
   token:{
