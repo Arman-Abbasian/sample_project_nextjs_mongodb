@@ -13,6 +13,7 @@ export default async function handler(req, res) {
       try {
         //validation with zod
     const response=userRegisterValidation(req.body)
+    console.log(req.body)
     if (!response.success) {
     const { errors } = response.error;
     console.log(errors)
