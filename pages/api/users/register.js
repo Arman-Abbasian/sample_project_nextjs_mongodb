@@ -16,12 +16,13 @@ export default async function handler(req, res) {
     console.log(req.body)
     if (!response.success) {
     const { errors } = response.error;
-    console.log(errors)
     const returnedErrors=errors.map(item=>{
       return {fieldName:item.path[0],message:item.message}
     })
+    console.log(returnedErrors)
     return res.status(400).json({
-    error: { message: "Invalid request", returnedErrors },
+      success:"false",
+      error: { message: "Invalid request", returnedErrors },
     });
   }
   //if there would be no problem then create data in db

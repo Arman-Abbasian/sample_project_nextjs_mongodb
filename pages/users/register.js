@@ -12,11 +12,9 @@ export default function Register() {
           confirmPassword:''
         },
         onSubmit: function (values) {
-            const {name,email,mobile,password}=values
-            const postData={name,email,mobile,password}
-          axios.post ('/api/users/register',postData)
+          axios.post ('/api/users/register',values)
           .then(res=>console.log(res.data))
-          .catch(err=>console.log(err.message))
+          .catch(err=>console.log(err.response.data))
         },
         validationSchema: Yup.object({
             name: Yup.string().required("please enter the Name")
@@ -82,7 +80,7 @@ export default function Register() {
             )}
           </div>
           <div className='text-center'>
-            <button className='bg-blue-500 rounded p-3 text-white' type='submit'>Submit</button>
+            <input type="submit" value="register" className='bg-blue-500 rounded p-3 text-white' />
           </div>
         </form>
       </div>
