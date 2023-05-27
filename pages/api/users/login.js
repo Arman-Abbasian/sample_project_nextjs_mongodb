@@ -26,18 +26,18 @@ export default async function handler(req, res) {
       const {mobile}=req.body;
       const user=await User.findOne({mobile})
       // if mobile number is not found
-      if(!user) res.status(400).json({ success: false ,message:"mobile or password is wrong"})
+      if(!user) return res.status(400).json({ success: false ,message:"mobile or password is wrong"})
       //2- if mobile number is found but the password was not matched
       const compareResult=bcrypt.compareSync(req.body.password,user.password)
-     if(!compareResult) res.status(400).json({ success: false ,message:"mobile or password is wrong"})
+     if(!compareResult) return res.status(400).json({ success: false ,message:"mobile or password is wrong"})
        //3- set the token to the header and redirect to the main page
-      res.setHeader('Authorization', `bearer ${user.token}`).status(201).json({ success: true, data: "user login successfully" })
-        return {
-          redirect: {
-            permanent: true,
-            destination: "/",
-          },
-        }; 
+     return res.status(201).json({ 
+        success: true, 
+        data: {
+          message:"user login successfully",
+          token: `bearer ${user.token}`
+        } 
+      })
       } catch (error) {
         console.log(error)
         res.status(400).json({ success: false ,message:error.message})

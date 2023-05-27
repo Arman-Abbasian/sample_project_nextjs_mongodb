@@ -1,8 +1,13 @@
 import axios from "axios";
 import { useFormik } from "formik";
+import { useState } from "react";
 import * as Yup from 'yup';
+import ShowErrorsForm from "../../components/showErrorsForm";
+import { useRouter } from "next/router";
 
 export default function Register() {
+  const {push}=useRouter();
+  const [formErrors,setFormErrors]=useState([])
     const formik = useFormik({
         initialValues: {
           name: '',
@@ -13,8 +18,10 @@ export default function Register() {
         },
         onSubmit: function (values) {
           axios.post ('/api/users/register',values)
-          .then(res=>console.log(res.data))
-          .catch(err=>console.log(err.response.data))
+          .then(res=>{
+            push("/users/login")
+          })
+          .catch(err=>setFormErrors(err.response.data.error.returnedErrors))
         },
         validationSchema: Yup.object({
             name: Yup.string().required("please enter the Name")
@@ -22,7 +29,7 @@ export default function Register() {
             email: Yup.string().email("email format is not true").required("please enter the email")
             .max(30,"email cannot be more than 60 characters"),
             mobile: Yup.string().required("please enter the mobile")
-            .matches(/9[0-9]{9}/ig,"mobile is wrong"),
+            .matches(/09[0-9]{9}/ig,"mobile is wrong"),
             password: Yup.string().required("please enter the password")
             .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,"Minimum eight characters, at least one letter and one number"),
             confirmPassword: Yup.string()
@@ -34,6 +41,11 @@ export default function Register() {
         <div className="bg-blue-300 min-w-screen min-h-screen overflow-x-hidden">
         <form onSubmit={formik.handleSubmit} className="max-w-lg mx-auto bg-white rounded shadow-lg mt-7 p-3">
         <h1 className='text-3xl mb-3 text-center'>Register</h1>
+        <div className="flex flex-col gap-2 mb-8">
+            {formErrors.map((item,index)=>{
+              return <ShowErrorsForm key={index} fieldName={item.fieldName} message={item.message} />
+            })}
+        </div>
           <div className='mb-4'>
             <label for="name">Full Name</label>
             <input type="text" name="name" id="name" 
@@ -54,7 +66,7 @@ export default function Register() {
           </div>
           <div className='mb-4'>
             <label for="mobile">Mobile</label>
-            <input type="number" name="mobile" id="mobile"
+            <input type="text" name="mobile" id="mobile"
               className={`block w-full rounded border py-1 px-2 ${formik.touched.mobile && formik.errors.mobile ? 'border-red-400' : 'border-gray-300'}`}
               onChange={formik.handleChange} onBlur={formik.handleBlur} value={formik.values.mobile} />
             {formik.touched.mobile && formik.errors.mobile && (

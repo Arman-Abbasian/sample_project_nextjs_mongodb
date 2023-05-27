@@ -29,7 +29,6 @@ password:{
   token:{
     type:String,
     default:""
-  }
-
+  },
 })
 module.exports = mongoose.models.User || mongoose.model('User', UserSchema)
