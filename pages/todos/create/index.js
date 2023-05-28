@@ -1,13 +1,22 @@
 import axios from "axios";
-import { useState } from "react";
-
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+'useclient'
 const CraeteTodo = () => {
-    const [formData,setFormData]=useState({todoName:"",todoDate:""})
+    const {push}=useRouter();
+    const [formData,setFormData]=useState({todoName:"",todoDate:""});
+    const [tokenn,setToken]=useState("")
+    useEffect(()=>{
+        const userToken=localStorage.getItem('todoToken')
+        !userToken ? push("/users/login")
+        :setToken(userToken)
+        
+    },[])
     const changeHandler=(e)=>{
         setFormData({...formData,[e.target.name]:e.target.value})
     }
     const submitHandler=()=>{
-        axios.post("/api/todos/staticTodos",formData)
+        axios.post("/api/todos/staticTodos",{...formData,tokenn})
         .then(res=>console.log(res.data))
         .catch(err=>console.log(err))
     }
