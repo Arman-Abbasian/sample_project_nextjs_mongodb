@@ -17,9 +17,8 @@ export default function Register() {
         onSubmit: function (values) {
           axios.post ('/api/users/login',values)
           .then(res=>{
-            console.log(res.data)
             localStorage.setItem("todoToken",res.data.data.token)
-            push("/")
+            push("/todos")
           })
           .catch(err=>{
             setFormErrors(err.response.data?.error?.returnedErrors || []);
