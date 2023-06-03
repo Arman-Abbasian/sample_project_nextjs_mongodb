@@ -4,6 +4,7 @@ import { useState } from "react";
 import * as Yup from 'yup';
 import ShowErrorsForm from "../../components/showErrorsForm";
 import { useRouter } from "next/router";
+import { setCookie } from "cookies-next";
 
 export default function Register() {
   const {push}=useRouter();
@@ -17,12 +18,14 @@ export default function Register() {
         onSubmit: function (values) {
           axios.post ('/api/users/login',values)
           .then(res=>{
-            localStorage.setItem("todoToken",res.data.data.token)
+            // localStorage.setItem("todoToken",res.data.data.token)
+            console.log(res.data.data.token)
+            setCookie('todoToken', res.data.data.token);
             push("/todos")
           })
           .catch(err=>{
-            setFormErrors(err.response.data?.error?.returnedErrors || []);
-            setDbError(err.response.data.message)
+            setFormErrors(err.response?.data?.error?.returnedErrors || []);
+            setDbError(err.response?.data?.message || [])
           })
         },
         validationSchema: Yup.object({
