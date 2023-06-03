@@ -1,22 +1,26 @@
 import axios from "axios";
 import { useRouter } from "next/router";
+import { getCookie } from "cookies-next";
+import  jwt  from 'jsonwebtoken'
+import dbConnect from "../../../lib/mongodb";
 import { useEffect, useState } from "react";
+import User from '../../../models/user.model.js'
 'useclient'
-const CraeteTodo = () => {
+const CraeteTodo = ({findedUser}) => {
+    const user=JSON.parse(findedUser);
+    const id=user._id;
     const {push}=useRouter();
     const [formData,setFormData]=useState({todoName:"",todoDate:""});
-    const [tokenn,setToken]=useState("")
     useEffect(()=>{
-        const userToken=localStorage.getItem('todoToken')
-        !userToken ? push("/users/login")
-        :setToken(userToken)
+        
         
     },[])
     const changeHandler=(e)=>{
         setFormData({...formData,[e.target.name]:e.target.value})
     }
-    const submitHandler=()=>{
-        axios.post("/api/todos/staticTodos",{...formData,tokenn})
+    const submitHandler=(e)=>{
+        e.preventDefault();
+        axios.post("/api/todos/staticTodos",{...formData,id})
         .then(res=>console.log(res.data))
         .catch(err=>console.log(err))
     }
@@ -40,3 +44,37 @@ const CraeteTodo = () => {
 }
  
 export default CraeteTodo;
+export async function getServerSideProps({ req, res }) {
+    const token=getCookie('todoToken',{ req, res });
+    const [bearer,main]=token.split(" ");
+    const payload=jwt.verify(main,process.env.SECRET_KEY);
+    const {mobile,email}=payload;
+    //connect to DB
+    await dbConnect();
+    //search the user based on mobile and email
+    const user=await User.findOne({mobile})
+          // if mobile number is not found
+          if(!user){
+            return {
+              redirect: {
+                permanent: false,
+                destination: "users/login",
+              },
+              props:{},
+            };
+          }
+          //2- check if the userEmail in DB match with the email in token
+          const compareResult=(user.email===email)
+         if(!compareResult){
+          return {
+            redirect: {
+              permanent: false,
+              destination: "users/login",
+            },
+            props:{},
+          };
+         }
+           //3- set the token to the header and redirect to the main page
+          const findedUser= JSON.stringify(user)
+        return { props: {findedUser} };
+      }

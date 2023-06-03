@@ -24,10 +24,26 @@ await dbConnect();
 //search the user based on mobile and email
 const user=await User.findOne({mobile})
       // if mobile number is not found
-      if(!user) return res.status(400).json({ success: false ,message:"mobile or password is wrong"})
+      if(!user){
+        return {
+          redirect: {
+            permanent: false,
+            destination: "users/login",
+          },
+          props:{},
+        };
+      }
       //2- check if the userEmail in DB match with the email in token
       const compareResult=(user.email===email)
-     if(!compareResult) return res.status(400).json({ success: false ,message:"mobile or password is wrong"})
+     if(!compareResult){
+      return {
+        redirect: {
+          permanent: false,
+          destination: "users/login",
+        },
+        props:{},
+      };
+     }
        //3- set the token to the header and redirect to the main page
       const findedUser= JSON.stringify(user)
     return { props: {findedUser} };
