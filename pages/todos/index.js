@@ -5,6 +5,7 @@ import dbConnect from "../../lib/mongodb";
 import User from '../../models/user.model.js'
 import Todo from '../../models/todo.model'
 import { useState } from "react";
+import Todoo from "../../components/Todo";
 
 const Todos = ({userTodos}) => {
   const [todos,setTodos]=useState({data:JSON.parse(userTodos),loading:false,error:null})
@@ -24,7 +25,7 @@ const Todos = ({userTodos}) => {
         (todos.loading) ? <p>loading</p> :
     (todos.data.length===0) ? <p>no todo</p> :
     todos.data.map(item=>(
-       <p key={item._id}>{item.todoName}</p>
+       <Todoo key={item._id} todoName={item.todoName} remainedTime={item.todoDate-item.todayData} completed={item.completed} />
     ))}
         </div>
      );

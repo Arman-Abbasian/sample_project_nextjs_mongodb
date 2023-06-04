@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { bool } from 'yup';
 var Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 /* PetSchema will correspond to a collection in your MongoDB database. */
@@ -16,6 +17,10 @@ const TodoSchema = new mongoose.Schema({
   todayDate:{
   type: String,
   dafault:Date.now()
+},
+completed:{
+  type:Boolean,
+  default:false
 },
 userID:{
     type: ObjectId,
