@@ -84,7 +84,7 @@ export async function getServerSideProps({ req, res }) {
           return {
             redirect: {
               permanent: false,
-              destination: "users/login",
+              destination: "/users/login",
             },
             props:{},
           };
