@@ -10,7 +10,7 @@ const TodoSchema = new mongoose.Schema({
     minlength: [3, 'Name cannot be less than 3 characters'],
   },
   todoDate: {
-    type: Date,
+    type: String,
     required: [true,"please enter the email"],
   },
   todayDate:{

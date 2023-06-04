@@ -5,6 +5,8 @@ import  jwt  from 'jsonwebtoken'
 import dbConnect from "../../../lib/mongodb";
 import { useEffect, useState } from "react";
 import User from '../../../models/user.model.js'
+import toast, { Toaster } from 'react-hot-toast';
+ 
 'useclient'
 const CraeteTodo = ({findedUser}) => {
     const user=JSON.parse(findedUser);
@@ -21,7 +23,10 @@ const CraeteTodo = ({findedUser}) => {
     const submitHandler=(e)=>{
         e.preventDefault();
         axios.post("/api/todos/staticTodos",{...formData,id})
-        .then(res=>console.log(res.data))
+        .then(res=>{
+          setFormData({todoName:"",todoDate:""});
+          toast.success(res.data.message)
+        })
         .catch(err=>console.log(err))
     }
     return ( 
@@ -30,13 +35,14 @@ const CraeteTodo = ({findedUser}) => {
                 <form className="flex flex-col gap-6" onSubmit={submitHandler}>
                     <div className="flex flex-col gap-2">
                     <label htmlFor="todoName">todo name</label>
-                    <input type="text" name="todoName" id="todoName" className="form-input" onChange={changeHandler} />
+                    <input type="text" name="todoName" id="todoName" className="form-input" onChange={changeHandler} value={formData.todoName} />
                     </div>
                     <div className="flex flex-col gap-2">
                     <label htmlFor="todoDate">todo date</label>
-                    <input type="date" name="todoDate" id="todoDate" className="form-input" onChange={changeHandler} />
+                    <input type="date" name="todoDate" id="todoDate" className="form-input" onChange={changeHandler} value={formData.todoDate} />
                     </div>
                     <input type="submit" value="Add" className="bg-blue-500"/>
+                    <Toaster />
                 </form>
             </div>
         </div>
@@ -46,6 +52,15 @@ const CraeteTodo = ({findedUser}) => {
 export default CraeteTodo;
 export async function getServerSideProps({ req, res }) {
     const token=getCookie('todoToken',{ req, res });
+    if(!token){
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/users/login",
+        },
+        props:{},
+      };
+    }
     const [bearer,main]=token.split(" ");
     const payload=jwt.verify(main,process.env.SECRET_KEY);
     const {mobile,email}=payload;
@@ -58,7 +73,7 @@ export async function getServerSideProps({ req, res }) {
             return {
               redirect: {
                 permanent: false,
-                destination: "users/login",
+                destination: "/users/login",
               },
               props:{},
             };
