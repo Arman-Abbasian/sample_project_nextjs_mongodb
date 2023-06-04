@@ -18,15 +18,18 @@ const Todos = ({userTodos}) => {
   }
   console.log(todos)
     return ( 
-        <div>
+        <div className="flex flex-col gap-2">
             <Link href={"/todos/create"} legacyBehavior ><a>add new todo</a></Link>
         <div>todo list</div>
         {
         (todos.loading) ? <p>loading</p> :
     (todos.data.length===0) ? <p>no todo</p> :
-    todos.data.map(item=>(
+    <div className="flex flex-col gap-3 w-full">
+    {todos.data.map(item=>(
        <Todoo key={item._id} todoName={item.todoName} remainedTime={item.todoDate-item.todayData} completed={item.completed} />
     ))}
+    </div>
+}
         </div>
      );
 }
