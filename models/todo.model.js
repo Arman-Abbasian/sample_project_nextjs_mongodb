@@ -14,10 +14,6 @@ const TodoSchema = new mongoose.Schema({
     type: String,
     required: [true,"please enter the email"],
   },
-  todayDate:{
-  type: String,
-  dafault:Date.now()
-},
 completed:{
   type:Boolean,
   default:false

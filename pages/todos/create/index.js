@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useRouter } from "next/router";
 import { getCookie } from "cookies-next";
 import  jwt  from 'jsonwebtoken'
 import dbConnect from "../../../lib/mongodb";
@@ -11,7 +10,6 @@ import toast, { Toaster } from 'react-hot-toast';
 const CraeteTodo = ({findedUser}) => {
     const user=JSON.parse(findedUser);
     const id=user._id;
-    const {push}=useRouter();
     const [formData,setFormData]=useState({todoName:"",todoDate:""});
     useEffect(()=>{
         

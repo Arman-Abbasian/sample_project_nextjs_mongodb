@@ -16,7 +16,13 @@ const Todos = ({userTodos}) => {
        <p key={item._id}>{item.todoName}</p>
     ))
   }
-  console.log(todos)
+  const remainedTime=(todoDate)=>{
+    const remainedDay=(todoDate-Date.now())/864000000;
+    if(remainedDay<0) return "expired";
+    const day=Math.round(remainedDay)
+    const hour=Math.floor((remainedDay % 1)*24)
+    return `${day} day & ${hour} hour to do`
+  }
     return ( 
         <div className="flex flex-col gap-2">
             <Link href={"/todos/create"} legacyBehavior ><a>add new todo</a></Link>
@@ -26,7 +32,7 @@ const Todos = ({userTodos}) => {
     (todos.data.length===0) ? <p>no todo</p> :
     <div className="flex flex-col gap-3 w-full">
     {todos.data.map(item=>(
-       <Todoo key={item._id} todoName={item.todoName} remainedTime={item.todoDate-item.todayData} completed={item.completed} />
+       <Todoo key={item._id} todoName={item.todoName} remainedTime={remainedTime(item.todoDate)} completed={item.completed} />
     ))}
     </div>
 }
