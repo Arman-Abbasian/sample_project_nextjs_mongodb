@@ -6,16 +6,13 @@ import User from '../../models/user.model.js'
 import Todo from '../../models/todo.model'
 import { useState } from "react";
 import Todoo from "../../components/Todo";
+import TodoFilter from "../../components/TodosHeader/TodosFilter";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const Todos = ({userTodos}) => {
   const [todos,setTodos]=useState({data:JSON.parse(userTodos),loading:false,error:null})
-  const render=()=>{
-    if(todos.loading) return <p>loading</p>
-    if(todos.data.length===0) return <p>no todo</p>
-    todos.data.map(item=>(
-       <p key={item._id}>{item.todoName}</p>
-    ))
-  }
+  const [filters,setFilters]=useState({condition:"All"})
   const remainedTime=(todoDate)=>{
     const remainedDay=(todoDate-Date.now())/864000000;
     if(remainedDay<0) return "expired";
@@ -23,16 +20,28 @@ const Todos = ({userTodos}) => {
     const hour=Math.floor((remainedDay % 1)*24)
     return `${day} day & ${hour} hour to do`
   }
+  const changeConditionHandler=(id)=>{
+    axios.patch(`/api/todos/${id}`)
+    .then(res=>setTodos({...todos,data:res.data.todos}))
+    .catch(err=>toast.error(err.message))
+    console.log(id)
+  }
+ 
     return ( 
         <div className="flex flex-col gap-2">
-            <Link href={"/todos/create"} legacyBehavior ><a>add new todo</a></Link>
-        <div>todo list</div>
         {
         (todos.loading) ? <p>loading</p> :
     (todos.data.length===0) ? <p>no todo</p> :
     <div className="flex flex-col gap-3 w-full">
+      <TodoFilter />
     {todos.data.map(item=>(
-       <Todoo key={item._id} todoName={item.todoName} remainedTime={remainedTime(item.todoDate)} completed={item.completed} />
+       <Todoo key={item._id} todoName={item.todoName} 
+       remainedTime={remainedTime(item.todoDate)} completed={item.completed}
+       onChangeCondition={()=>changeConditionHandler(item._id)} 
+       onCompleteHandler={()=>completeHandler(item._id)} 
+       onTodoEdit={()=>todoEditHandler(item._id)} 
+       onTodoDelete={()=>todoDeleteHandler(item._id)}
+       />
     ))}
     </div>
 }
