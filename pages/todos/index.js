@@ -24,7 +24,11 @@ const Todos = ({userTodos}) => {
     axios.patch(`/api/todos/${id}`)
     .then(res=>setTodos({...todos,data:res.data.todos}))
     .catch(err=>toast.error(err.message))
-    console.log(id)
+  }
+  const todoEditHandler=(id)=>{
+    axios.put(`/api/todos/${id}`)
+    .then(res=>setTodos({...todos,data:res.data.todos}))
+    .catch(err=>toast.error(err.message))
   }
  
     return ( 
@@ -35,7 +39,7 @@ const Todos = ({userTodos}) => {
     <div className="flex flex-col gap-3 w-full">
       <TodoFilter />
     {todos.data.map(item=>(
-       <Todoo key={item._id} todoName={item.todoName} 
+       <Todoo key={item._id} todoName={item.todoName} id={item._id} 
        remainedTime={remainedTime(item.todoDate)} completed={item.completed}
        onChangeCondition={()=>changeConditionHandler(item._id)} 
        onCompleteHandler={()=>completeHandler(item._id)} 
