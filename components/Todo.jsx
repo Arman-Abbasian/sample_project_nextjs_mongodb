@@ -7,7 +7,7 @@ const Todoo = ({id,todoName,remainedTime,completed,onChangeCondition,onTodoDelet
         <div className="flex justify-center items-center p-2 bg-blue-100 gap-6">
             <div className="flex justify-between item-center flex-1 bg-red-100">
                 <p>{todoName}</p>
-                <p>{remainedTime}</p>
+                {completed ? <p>done</p> : <p>{remainedTime}</p>}
             </div>
            <div className="flex gap-4">
             <div className="flex justify-center items-center">

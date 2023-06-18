@@ -4,7 +4,7 @@ import  jwt  from 'jsonwebtoken'
 import dbConnect from "../../lib/mongodb";
 import User from '../../models/user.model.js'
 import Todo from '../../models/todo.model'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Todoo from "../../components/Todo";
 import TodoFilter from "../../components/TodosHeader/TodosFilter";
 import axios from "axios";
@@ -14,13 +14,12 @@ const Todos = ({userTodos}) => {
   const [todos,setTodos]=useState({data:JSON.parse(userTodos),loading:false,error:null})
   const [filters,setFilters]=useState({condition:"All"})
   const remainedTime=(todoDate)=>{
-    console.log()
-    const remainedDay=(new Date(todoDate).getTime()-Date.now())/864000000;
+    const remainedDay=(new Date(todoDate).getTime()-Date.now())/86400000;
     console.log(remainedDay)
     if(remainedDay<0) return "expired";
-    const day=Math.round(remainedDay)
+    const day=Math.floor(remainedDay)
     const hour=Math.floor((remainedDay % 1)*24)
-    return `${day} day & ${hour} hour to do`
+    return `${day} day & ${hour} hour left`
   }
   const changeConditionHandler=(id)=>{
     axios.patch(`/api/todos/dynamicTodos/${id}`)
@@ -44,7 +43,6 @@ const Todos = ({userTodos}) => {
       toast.error(err.message);
     })
   }
-
     return ( 
         <div className="flex flex-col gap-2">
         {
