@@ -21,16 +21,11 @@ const Todos = ({userTodos}) => {
     return `${day} day & ${hour} hour to do`
   }
   const changeConditionHandler=(id)=>{
-    axios.patch(`/api/todos/${id}`)
+    axios.patch(`/api/todos/dynamicTodos/${id}`)
     .then(res=>setTodos({...todos,data:res.data.todos}))
     .catch(err=>toast.error(err.message))
   }
-  const todoEditHandler=(id)=>{
-    axios.put(`/api/todos/${id}`)
-    .then(res=>setTodos({...todos,data:res.data.todos}))
-    .catch(err=>toast.error(err.message))
-  }
- 
+
     return ( 
         <div className="flex flex-col gap-2">
         {
@@ -43,7 +38,6 @@ const Todos = ({userTodos}) => {
        remainedTime={remainedTime(item.todoDate)} completed={item.completed}
        onChangeCondition={()=>changeConditionHandler(item._id)} 
        onCompleteHandler={()=>completeHandler(item._id)} 
-       onTodoEdit={()=>todoEditHandler(item._id)} 
        onTodoDelete={()=>todoDeleteHandler(item._id)}
        />
     ))}

@@ -7,11 +7,16 @@ import Todo from '../../../models/todo.model'
 import { Toaster, toast } from "react-hot-toast";
 import { useState } from "react";
 import { inputDateFormat } from "../../../utils/inputDate.Format";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 const EditTodo = ({findedTodo}) => {
+  const router=useRouter();
     const todo=JSON.parse(findedTodo);
-    const id=findedTodo._id;
+    const id=todo._id;
    const newDateFormat= inputDateFormat(todo.todoDate)
+   console.log(new Date(Date(todo.todoDate)))
+   console.log(newDateFormat)
     const [formData,setFormData]=useState({todoName:todo.todoName,todoDate:newDateFormat});
     console.log(formData)
     const changeHandler=(e)=>{
@@ -19,10 +24,12 @@ const EditTodo = ({findedTodo}) => {
     }
     const submitHandler=(e)=>{
         e.preventDefault();
-        axios.put("/api/todos/staticTodos",{...formData,id})
+        console.log(id)
+        setFormData({...formData,todoDate:new Date(newDateFormat).getTime()})
+        axios.put(`/api/todos/dynamicTodos/${id}`,{...formData,id})
         .then(res=>{
-          setFormData({todoName:"",todoDate:""});
           toast.success(res.data.message)
+          router.push("/todos")
         })
         .catch(err=>console.log(err))
     }

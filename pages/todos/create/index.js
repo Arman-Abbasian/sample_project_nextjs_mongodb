@@ -11,15 +11,13 @@ const CraeteTodo = ({findedUser}) => {
     const user=JSON.parse(findedUser);
     const id=user._id;
     const [formData,setFormData]=useState({todoName:"",todoDate:""});
-    useEffect(()=>{
-        
-        
-    },[])
+  console.log(formData)
     const changeHandler=(e)=>{
         setFormData({...formData,[e.target.name]:e.target.value})
     }
     const submitHandler=(e)=>{
         e.preventDefault();
+        setFormData({...formData,todoDate:new Date(formData.todoDate).getTime()})
         axios.post("/api/todos/staticTodos",{...formData,id})
         .then(res=>{
           setFormData({todoName:"",todoDate:""});

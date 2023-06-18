@@ -1,5 +1,8 @@
 export const inputDateFormat = (input)=>{
+    console.log(+input)
+    console.log(new Date(+input))
 const formatDate=new Date(Date(input));
+console.log(formatDate)
 const yyyy = formatDate.getFullYear();
 let mm = formatDate.getMonth() + 1; 
 let dd = formatDate.getDate();
