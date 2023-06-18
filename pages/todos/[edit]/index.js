@@ -15,8 +15,6 @@ const EditTodo = ({findedTodo}) => {
     const todo=JSON.parse(findedTodo);
     const id=todo._id;
    const newDateFormat= inputDateFormat(todo.todoDate)
-   console.log(new Date(Date(todo.todoDate)))
-   console.log(newDateFormat)
     const [formData,setFormData]=useState({todoName:todo.todoName,todoDate:newDateFormat});
     console.log(formData)
     const changeHandler=(e)=>{
@@ -24,8 +22,7 @@ const EditTodo = ({findedTodo}) => {
     }
     const submitHandler=(e)=>{
         e.preventDefault();
-        console.log(id)
-        setFormData({...formData,todoDate:new Date(newDateFormat).getTime()})
+        setFormData({...formData,todoDate:new Date(formData.todoDate).getTime()})
         axios.put(`/api/todos/dynamicTodos/${id}`,{...formData,id})
         .then(res=>{
           toast.success(res.data.message)

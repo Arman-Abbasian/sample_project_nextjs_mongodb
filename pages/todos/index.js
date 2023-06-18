@@ -14,7 +14,9 @@ const Todos = ({userTodos}) => {
   const [todos,setTodos]=useState({data:JSON.parse(userTodos),loading:false,error:null})
   const [filters,setFilters]=useState({condition:"All"})
   const remainedTime=(todoDate)=>{
-    const remainedDay=(todoDate-Date.now())/864000000;
+    console.log()
+    const remainedDay=(new Date(todoDate).getTime()-Date.now())/864000000;
+    console.log(remainedDay)
     if(remainedDay<0) return "expired";
     const day=Math.round(remainedDay)
     const hour=Math.floor((remainedDay % 1)*24)
