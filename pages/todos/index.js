@@ -24,8 +24,25 @@ const Todos = ({userTodos}) => {
   }
   const changeConditionHandler=(id)=>{
     axios.patch(`/api/todos/dynamicTodos/${id}`)
-    .then(res=>setTodos({...todos,data:res.data.todos}))
-    .catch(err=>toast.error(err.message))
+    .then(res=>{
+      setTodos({...todos,data:res.data.todos});
+      toast.success("changed")
+    })
+    .catch(err=>{
+      setTodos({...todos,error:err});
+      toast.error(err.message)
+    })
+  }
+  const todoDeleteHandler=(id)=>{
+    axios.delete(`/api/todos/dynamicTodos/${id}`)
+    .then(res=>{
+      toast.success(res.data.message);
+      setTodos({...todos,data:res.data.todos});
+    })
+    .catch(err=>{
+      setTodos({...todos,error:err});
+      toast.error(err.message);
+    })
   }
 
     return ( 
