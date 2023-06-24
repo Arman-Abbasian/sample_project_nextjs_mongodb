@@ -7,5 +7,8 @@ body{
 @layer components {
     .icon {
       @apply text-teal-950 hover:text-teal-900 w-5 h-5;
+    };
+    .formInput{
+        @apply form-input text-teal-950 rounded-md border-teal-700 focus:border-none focus:ring-teal-400 shadow-sm focus:shadow-lg shadow-teal-500;
     }
   }

@@ -5,6 +5,7 @@ import dbConnect from "../../../lib/mongodb";
 import { useEffect, useState } from "react";
 import User from '../../../models/user.model.js'
 import toast, { Toaster } from 'react-hot-toast';
+import FormComponent from "../../../components/FormComponent";
  
 'useclient'
 const CraeteTodo = ({findedUser}) => {
@@ -29,14 +30,8 @@ const CraeteTodo = ({findedUser}) => {
         <div>
             <div className="container mx-auto max-w-md">
                 <form className="flex flex-col gap-6" onSubmit={submitHandler}>
-                    <div className="flex flex-col gap-2">
-                    <label htmlFor="todoName">todo name</label>
-                    <input type="text" name="todoName" id="todoName" className="form-input" onChange={changeHandler} value={formData.todoName} />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                    <label htmlFor="todoDate">todo date</label>
-                    <input type="date" name="todoDate" id="todoDate" className="form-input" onChange={changeHandler} value={formData.todoDate} />
-                    </div>
+                  <FormComponent label={"todo name"} name={"todoName"} onChange={changeHandler} value={formData.todoName}/>
+                  <FormComponent label={"todo date"} name={"todoDate"} onChange={changeHandler} value={formData.todoDate} type="date"/> 
                     <input type="submit" value="Add" className="bg-blue-500"/>
                     <Toaster />
                 </form>
