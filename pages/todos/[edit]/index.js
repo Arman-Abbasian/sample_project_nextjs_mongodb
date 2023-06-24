@@ -14,17 +14,17 @@ const EditTodo = ({findedTodo}) => {
   const router=useRouter();
     const todo=JSON.parse(findedTodo);
     const id=todo._id;
-   const newDateFormat= inputDateFormat(todo.todoDate)
-    const [formData,setFormData]=useState({todoName:todo.todoName,todoDate:newDateFormat});
+
+    const [formData,setFormData]=useState({todoName:todo.todoName,todoDate:todo.todoDate});
     console.log(formData)
     const changeHandler=(e)=>{
         setFormData({...formData,[e.target.name]:e.target.value})
     }
     const submitHandler=(e)=>{
         e.preventDefault();
-        setFormData({...formData,todoDate:new Date(formData.todoDate).getTime()})
         axios.put(`/api/todos/dynamicTodos/${id}`,{...formData,id})
         .then(res=>{
+          console.log(res.data.message)
           toast.success(res.data.message)
           router.push("/todos")
         })
@@ -42,7 +42,7 @@ const EditTodo = ({findedTodo}) => {
                     <label htmlFor="todoDate">todo date</label>
                     <input type="date" name="todoDate" id="todoDate" className="form-input" onChange={changeHandler} value={formData.todoDate} />
                     </div>
-                    <input type="submit" value="Add" className="bg-blue-500"/>
+                    <input type="submit" value="update" className="bg-blue-500 cursor-pointer"/>
                     <Toaster />
                 </form>
             </div>

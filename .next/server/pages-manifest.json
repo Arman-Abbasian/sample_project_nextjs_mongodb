@@ -3,6 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/todos": "pages/todos.js",
-  "/todos/[edit]": "pages/todos/[edit].js",
-  "/api/todos/dynamicTodos/[dynamicTodos]": "pages/api/todos/dynamicTodos/[dynamicTodos].js"
+  "/api/todos/dynamicTodos/[dynamicTodos]": "pages/api/todos/dynamicTodos/[dynamicTodos].js",
+  "/todos/[edit]": "pages/todos/[edit].js"
 }

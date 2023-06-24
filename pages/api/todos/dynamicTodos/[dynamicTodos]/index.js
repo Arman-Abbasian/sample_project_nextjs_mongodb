@@ -20,21 +20,24 @@ export default async function handler(req, res) {
       } catch (error) {
         res.status(400).json({ success: false,message:error.message })
       }
+      break;
       case 'PUT':
       try {
         const {dynamicTodos}=req.query;
         const {todoName,todoDate}=req.body
         const todo= await Todo.findOne({_id:dynamicTodos})
         if(!todo) res.status(404).json({success:false,message:"todo not found"})
-        const updateTodo = await Todo.updateOne(
-            { _id : dynamicTodos },
-            { $set: { todoName :todoName,todoDate} }
-         );
+        const updateTodo = await Todo.findOneAndUpdate(
+          { "_id" : dynamicTodos },
+          { $set: { "todoName" : todoName, "todoDate" : todoDate}}
+        );
+        console.log(updateTodo)
          if(updateTodo.modifiedCount===0) res.status(404).json({success:false,message:"server error"})
         res.status(200).json({ success: true, message: "todo updated successfully" })
       } catch (error) {
         res.status(400).json({ success: false,message:error.message })
       }
+      break;
       case 'DELETE':
       try {
         const {dynamicTodos}=req.query;
@@ -47,6 +50,7 @@ export default async function handler(req, res) {
       } catch (error) {
         res.status(400).json({ success: false,message:error.message })
       }
+      break;
     default:
       res.status(400).json({ success: false,message:"error" })
       break
