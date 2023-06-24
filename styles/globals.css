@@ -4,3 +4,8 @@
 body{
     padding: 2rem;
 }
+@layer components {
+    .icon {
+      @apply text-teal-950 hover:text-teal-900 w-5 h-5;
+    }
+  }

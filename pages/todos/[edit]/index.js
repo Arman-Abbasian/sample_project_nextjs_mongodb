@@ -24,7 +24,6 @@ const EditTodo = ({findedTodo}) => {
         e.preventDefault();
         axios.put(`/api/todos/dynamicTodos/${id}`,{...formData,id})
         .then(res=>{
-          console.log(res.data.message)
           toast.success(res.data.message)
           router.push("/todos")
         })
