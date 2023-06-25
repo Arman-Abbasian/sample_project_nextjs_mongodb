@@ -25,15 +25,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/todos": [
+    "/users/login": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/todos.js"
-    ],
-    "/todos/[edit]": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/todos/[edit].js"
+      "static/chunks/pages/users/login.js"
     ]
   },
   "ampFirstPages": []
