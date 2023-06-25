@@ -32,9 +32,9 @@ const EditTodo = ({findedTodo}) => {
         .catch(err=>console.log(err))
     }
     return ( 
-        <div>
+        <div className="container mx-auto max-w-md">
           <Link href='/todos' legacyBehavior><a className="text-teal-500 hover:text-teal-800"><AiOutlineArrowLeft  /></a></Link>
-            <div className="container mx-auto max-w-md mt-10">
+            <div className="mt-10">
                 <form className="flex flex-col gap-6" onSubmit={submitHandler}>
                 <FormComponent label={"todo name"} name={"todoName"} onChange={changeHandler} value={formData.todoName}/>
                   <FormComponent label={"todo date"} name={"todoDate"} onChange={changeHandler} value={formData.todoDate} type="date"/> 

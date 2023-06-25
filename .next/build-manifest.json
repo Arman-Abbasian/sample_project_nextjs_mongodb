@@ -29,6 +29,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/todos.js"
+    ],
+    "/todos/[edit]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/todos/[edit].js"
     ]
   },
   "ampFirstPages": []

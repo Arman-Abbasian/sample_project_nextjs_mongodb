@@ -2,5 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/todos": "pages/todos.js"
+  "/todos": "pages/todos.js",
+  "/api/todos/dynamicTodos/[dynamicTodos]": "pages/api/todos/dynamicTodos/[dynamicTodos].js",
+  "/todos/[edit]": "pages/todos/[edit].js"
 }
