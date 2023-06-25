@@ -49,7 +49,9 @@ const Todos = ({userTodos}) => {
         (todos.loading) ? <p>loading</p> :
     (todos.data.length===0) ? <p>no todo</p> :
     <div className="flex flex-col gap-3 w-full">
-      <TodoFilter />
+     
+      <Link href='/todos/create' legacyBehavior><a className="text-teal-500 hover:text-teal-800">Add new Todo?</a></Link>
+      <div className="mt-10">
     {todos.data.map(item=>(
        <Todoo key={item._id} todoName={item.todoName} id={item._id} 
        remainedTime={remainedTime(item.todoDate)} completed={item.completed}
@@ -58,6 +60,7 @@ const Todos = ({userTodos}) => {
        onTodoDelete={()=>todoDeleteHandler(item._id)}
        />
     ))}
+    </div>
     </div>
 }
         </div>

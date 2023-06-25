@@ -9,6 +9,8 @@ import { useState } from "react";
 import { inputDateFormat } from "../../../utils/inputDate.Format";
 import axios from "axios";
 import { useRouter } from "next/router";
+import FormComponent from "../../../components/FormComponent";
+import { AiOutlineArrowLeft} from "react-icons/ai";
 
 const EditTodo = ({findedTodo}) => {
   const router=useRouter();
@@ -31,17 +33,12 @@ const EditTodo = ({findedTodo}) => {
     }
     return ( 
         <div>
-            <div className="container mx-auto max-w-md">
+          <Link href='/todos' legacyBehavior><a className="text-teal-500 hover:text-teal-800"><AiOutlineArrowLeft  /></a></Link>
+            <div className="container mx-auto max-w-md mt-10">
                 <form className="flex flex-col gap-6" onSubmit={submitHandler}>
-                    <div className="flex flex-col gap-2">
-                    <label htmlFor="todoName">todo name</label>
-                    <input type="text" name="todoName" id="todoName" className="form-input" onChange={changeHandler} value={formData.todoName} />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                    <label htmlFor="todoDate">todo date</label>
-                    <input type="date" name="todoDate" id="todoDate" className="form-input" onChange={changeHandler} value={formData.todoDate} />
-                    </div>
-                    <input type="submit" value="update" className="bg-blue-500 cursor-pointer"/>
+                <FormComponent label={"todo name"} name={"todoName"} onChange={changeHandler} value={formData.todoName}/>
+                  <FormComponent label={"todo date"} name={"todoDate"} onChange={changeHandler} value={formData.todoDate} type="date"/> 
+                    <input type="submit" value="update" className="submitButton"/>
                     <Toaster />
                 </form>
             </div>
