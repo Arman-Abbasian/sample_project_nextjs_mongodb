@@ -45,7 +45,7 @@ export default function Register() {
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-6">
         <FormikComponent label={"mobile"} name={"mobile"}formik={formik}  />
         <FormikComponent label={"password"} name={"password"}formik={formik}  />
-            <input type="submit" value="login" className='submitButton' disabled={!formik.isValid} />
+            <input type="submit" value="login" className={`bg-teal-500 rounded p-3 w-full mt-10 text-white ${formik.isValid?'cursor-pointer':'cursor-not-allowed'}`} disabled={!formik.isValid} />
         </form>
       </div>
     )

@@ -47,7 +47,12 @@ const Todos = ({userTodos}) => {
         <div className="flex flex-col gap-2 container mx-auto max-w-2xl">
         {
         (todos.loading) ? <p>loading</p> :
-    (todos.data.length===0) ? <p>no todo</p> :
+    (todos.data.length===0) ? <div>
+      <Link href='/todos/create' legacyBehavior><a className="text-teal-500 hover:text-teal-800">Add new Todo?</a></Link>
+    <p>no todo</p> 
+    </div>
+    
+    :
     <div className="flex flex-col gap-3 w-full">
      
       <Link href='/todos/create' legacyBehavior><a className="text-teal-500 hover:text-teal-800">Add new Todo?</a></Link>

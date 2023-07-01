@@ -2,7 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/api/users/login": "pages/api/users/login.js",
-  "/users/login": "pages/users/login.js",
-  "/todos": "pages/todos.js"
+  "/api/todos/staticTodos": "pages/api/todos/staticTodos.js",
+  "/todos": "pages/todos.js",
+  "/todos/create": "pages/todos/create.js",
+  "/api/todos/dynamicTodos/[dynamicTodos]": "pages/api/todos/dynamicTodos/[dynamicTodos].js"
 }
