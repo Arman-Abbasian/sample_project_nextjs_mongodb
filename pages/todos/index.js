@@ -4,9 +4,8 @@ import  jwt  from 'jsonwebtoken'
 import dbConnect from "../../lib/mongodb";
 import User from '../../models/user.model.js'
 import Todo from '../../models/todo.model'
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Todoo from "../../components/Todo";
-import TodoFilter from "../../components/TodosHeader/TodosFilter";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 
