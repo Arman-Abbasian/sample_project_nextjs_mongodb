@@ -6,7 +6,7 @@ import User from '../models/user.model'
 export default function Home() {
   return (
     <div>
-      <p className='bg-slate-500'>Todo App</p>
+      <p>Todo App</p>
     </div>
   )
 }

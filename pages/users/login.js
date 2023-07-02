@@ -21,18 +21,21 @@ export default function Register() {
         },
         validateOnMount:true,
         onSubmit: function (values) {
+          setDbError([]);
+          setDbError("")
           axios.post ('/api/users/login',values)
           .then(res=>{
             // localStorage.setItem("todoToken",res.data.data.token)
-            console.log(res.data.data.token)
             setCookie('todoToken', res.data.data.token);
             push("/todos")
           })
           .catch(err=>{
+            console.log(err)
             setFormErrors(err.response?.data?.error?.returnedErrors || []);
             setDbError(err.response?.data?.message || [])
           })
         },
+        
         validationSchema: Yup.object({
             mobile: Yup.string().required("please enter the mobile")
             .matches(/09[0-9]{9}/ig,"mobile is wrong"),
@@ -40,7 +43,7 @@ export default function Register() {
             .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,"Minimum eight characters, at least one letter and one number"),
           })
       })
-
+      
     return (
         <div className="container mx-auto max-w-md">
           <Link href='/users/register' legacyBehavior><a className="text-teal-500 hover:text-teal-800">register ?</a></Link>
@@ -48,6 +51,10 @@ export default function Register() {
         <form onSubmit={formik.handleSubmit} className="flex flex-col gap-6">
         <FormikComponent label={"mobile"} name={"mobile"}formik={formik}  />
         <FormikComponent label={"password"} name={"password"}formik={formik}  />
+        <div className="flex flex-col justify-start items-center text-red-400">
+          <p>{dbError}</p>
+          <p>{formErrors}</p>
+        </div>
             <input type="submit" value="login" className={`bg-teal-500 rounded p-3 w-full mt-10 text-white ${formik.isValid?'cursor-pointer':'cursor-not-allowed'}`} disabled={!formik.isValid} />
         </form>
       </div>
