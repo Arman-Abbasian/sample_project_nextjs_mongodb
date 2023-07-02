@@ -13,12 +13,12 @@ const Todos = ({userTodos}) => {
   const [todos,setTodos]=useState({data:JSON.parse(userTodos),loading:false,error:null})
   const [filters,setFilters]=useState({condition:"All"})
   const remainedTime=(todoDate)=>{
-    const remainedDay=(new Date(todoDate).getTime()-Date.now())/86400000;
-    console.log(remainedDay)
-    if(remainedDay<0) return "expired";
+    const remainedDayy=(new Date(todoDate).getTime()-Date.now())/86400000;
+    const remainedDay=remainedDayy+1;
+    if(remainedDay+1<0) return "expired";
     const day=Math.floor(remainedDay)
     const hour=Math.floor((remainedDay % 1)*24)
-    return `${day} day & ${hour} hour left`
+    return `${day}d:${hour}h`
   }
   const changeConditionHandler=(id)=>{
     axios.patch(`/api/todos/dynamicTodos/${id}`)

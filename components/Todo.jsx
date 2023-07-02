@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AiOutlineCheck,AiOutlineEdit,AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineCheck,AiOutlineEdit,AiOutlineDelete,AiOutlineHourglass } from "react-icons/ai";
 import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
 const Todoo = ({id,todoName,remainedTime,completed,onChangeCondition,onTodoDelete}) => {
@@ -7,7 +7,7 @@ const Todoo = ({id,todoName,remainedTime,completed,onChangeCondition,onTodoDelet
         <div className={`grid grid-cols-6 p-4 shadow-md rounded-md gap-6 ${completed?'bg-teal-700 ':'bg-teal-300'}`}>
             <div className="flex justify-between item-center flex-1 col-span-4">
                 <p>{todoName}</p>
-                {completed ? <p>done</p> : <p>{remainedTime}</p>}
+                {completed ? <p>done</p> : <p className="flex items-center gap-x-1"><AiOutlineHourglass className="icon"/>{remainedTime}</p>}
             </div>
            <div className="flex justify-end items-center gap-4 col-span-2">
             <div className="flex justify-center items-center">
