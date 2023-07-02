@@ -19,6 +19,7 @@ export default function Register() {
           mobile: '',
           password:''
         },
+        validateOnMount:true,
         onSubmit: function (values) {
           axios.post ('/api/users/login',values)
           .then(res=>{

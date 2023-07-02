@@ -7,7 +7,7 @@ import Todo from '../../models/todo.model'
 import { useState } from "react";
 import Todoo from "../../components/Todo";
 import axios from "axios";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 
 const Todos = ({userTodos}) => {
   const [todos,setTodos]=useState({data:JSON.parse(userTodos),loading:false,error:null})
@@ -64,6 +64,7 @@ const Todos = ({userTodos}) => {
        onTodoDelete={()=>todoDeleteHandler(item._id)}
        />
     ))}
+    <Toaster />
     </div>
     </div>
 }

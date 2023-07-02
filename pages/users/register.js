@@ -23,6 +23,7 @@ export default function Register() {
           password:'',
           confirmPassword:''
         },
+        validateOnMount:true,
         onSubmit: function (values) {
           axios.post ('/api/users/register',values)
           .then(res=>{

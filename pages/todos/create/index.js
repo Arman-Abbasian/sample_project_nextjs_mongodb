@@ -5,13 +5,11 @@ import dbConnect from "../../../lib/mongodb";
 import { useState } from "react";
 import User from '../../../models/user.model.js'
 import toast, { Toaster } from 'react-hot-toast';
-import FormComponent from "../../../components/FormComponent";
 import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from 'yup';
 import FormikComponent from "../../../components/FormikComponent";
  
-'useclient'
 const CraeteTodo = ({findedUser}) => {
     const user=JSON.parse(findedUser);
     const id=user._id;
@@ -23,12 +21,13 @@ const CraeteTodo = ({findedUser}) => {
             todoName: '',
             todoDate:''
           },
-          onSubmit: function (values) {
+          validateOnMount:true,
+          onSubmit: function (values,{resetForm}) {
             console.log(values)
             axios.post ('/api/todos/staticTodos',{...values,id})
             .then(res=>{
-              console.log(res.data)
               toast.success(res.data.message)
+              resetForm({values:''})
             })
             .catch(err=>{
               setFormErrors(err.response?.data?.error?.returnedErrors || []);
