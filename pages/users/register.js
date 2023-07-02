@@ -7,6 +7,10 @@ import { useRouter } from "next/router";
 import FormikComponent from "../../components/FormikComponent";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
+import User from '../../models/user.model.js';
+import dbConnect from "../../lib/mongodb";
+import { getCookie } from "cookies-next";
+import  jwt  from 'jsonwebtoken'
 
 export default function Register() {
   const {push}=useRouter();
@@ -61,3 +65,33 @@ console.log(formik.isValid)
       </div>
     )
   }
+
+  export async function getServerSideProps({ req, res }) {
+    const token=getCookie('todoToken',{ req, res });
+    if(token){
+      const [bearer,main]=token.split(" ");
+    const payload=jwt.verify(main,process.env.SECRET_KEY);
+    const {mobile,email}=payload;
+    //connect to DB
+    await dbConnect();
+    //search the user based on mobile and email
+    const user=await User.findOne({mobile})
+    if(user){
+      const compareResult=(user.email===email)
+   if(compareResult){
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/todos",
+      },
+      props:{},
+    };
+   }
+    }
+      
+    }else{
+      return { props: {} }
+    }
+
+  }
+    

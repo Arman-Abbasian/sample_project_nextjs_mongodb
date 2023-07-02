@@ -2,11 +2,13 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
 import * as Yup from 'yup';
-import ShowErrorsForm from "../../components/showErrorsForm";
+import  jwt  from 'jsonwebtoken'
 import { useRouter } from "next/router";
-import { setCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 import FormikComponent from "../../components/FormikComponent";
 import Link from "next/link";
+import User from '../../models/user.model.js';
+import dbConnect from "../../lib/mongodb";
 
 export default function Register() {
   const {push}=useRouter();
@@ -50,3 +52,33 @@ export default function Register() {
       </div>
     )
   }
+
+  export async function getServerSideProps({ req, res }) {
+    const token=getCookie('todoToken',{ req, res });
+    if(token){
+      const [bearer,main]=token.split(" ");
+    const payload=jwt.verify(main,process.env.SECRET_KEY);
+    const {mobile,email}=payload;
+    //connect to DB
+    await dbConnect();
+    //search the user based on mobile and email
+    const user=await User.findOne({mobile})
+    if(user){
+      const compareResult=(user.email===email)
+   if(compareResult){
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/todos",
+      },
+      props:{},
+    };
+   }
+    }
+      
+    }else{
+      return { props: {} }
+    }
+
+  }
+    

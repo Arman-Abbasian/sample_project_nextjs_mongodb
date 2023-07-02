@@ -30,15 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/todos.js"
     ],
-    "/todos/[edit]": [
+    "/users/register": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/todos/[edit].js"
-    ],
-    "/todos/create": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/todos/create.js"
+      "static/chunks/pages/users/register.js"
     ]
   },
   "ampFirstPages": []
